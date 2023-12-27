@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -28,14 +29,17 @@ class MainScreen extends StatelessWidget {
                     ),
                   ),
                   hintText: 'Search',
-                  suffixIcon: const Icon(Icons.search, color: Color(0xFF4FB6B2),),
+                  suffixIcon: const Icon(
+                    Icons.search,
+                    color: Color(0xFF4FB6B2),
+                  ),
                 ),
               ),
               Expanded(
                 child: GridView.builder(
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return const Text('111');
+                    return const ImageItemWidget();
                   },
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
