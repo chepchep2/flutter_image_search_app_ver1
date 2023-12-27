@@ -27,6 +27,8 @@ class MainScreen extends StatelessWidget {
                       color: Color(0xFF4FB6B2),
                     ),
                   ),
+                  hintText: 'Search',
+                  suffixIcon: const Icon(Icons.search, color: Color(0xFF4FB6B2),),
                 ),
               ),
               Expanded(
