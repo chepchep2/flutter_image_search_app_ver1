@@ -11,15 +11,30 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final repository = ImageItemRepository();
+  final searchTextEditingController = TextEditingController();
 
-  var imageItems = [];
+  final repository = MockImageItemRepository();
+
+  List<ImageItem> imageItems = [];
+  bool isLoading = false;
 
   Future<void> searchImage(String query) async {
+    setState(() {
+      isLoading = true;
+    });
+
     imageItems = await repository.getImageItems(query);
 
     // 강제 UI 업데이트
-    setState(() {});
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    searchTextEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -31,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             children: [
               TextField(
+                controller: searchTextEditingController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -48,7 +64,8 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   hintText: 'Search',
                   suffixIcon: IconButton(
-                    onPressed: () => searchImage('사과'),
+                    onPressed: () =>
+                        searchImage(searchTextEditingController.text),
                     icon: const Icon(
                       Icons.search,
                       color: Color(0xFF4FB6B2),
@@ -57,20 +74,25 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: imageItems.length,
-                  itemBuilder: (context, index) {
-                    final imageItem = imageItems[index];
-                    return ImageItemWidget(imageItem: imageItem);
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 32,
-                    mainAxisSpacing: 32,
-                  ),
-                ),
-              ),
+              isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Expanded(
+                      child: GridView.builder(
+                        itemCount: imageItems.length,
+                        itemBuilder: (context, index) {
+                          final imageItem = imageItems[index];
+                          return ImageItemWidget(imageItem: imageItem);
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 32,
+                          mainAxisSpacing: 32,
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
