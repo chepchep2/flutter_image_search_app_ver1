@@ -35,6 +35,7 @@ class MainScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 24),
               Expanded(
                 child: GridView.builder(
                   itemCount: 10,
@@ -42,7 +43,10 @@ class MainScreen extends StatelessWidget {
                     return const ImageItemWidget();
                   },
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 32,
+                    mainAxisSpacing: 32,
+                  ),
                 ),
               ),
             ],

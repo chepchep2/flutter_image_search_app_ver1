@@ -5,9 +5,13 @@ class ImageItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      'https://cdn.pixabay.com/photo/2023/10/05/17/54/geese-8296524_640.jpg',
-      fit: BoxFit.cover,
+    return ClipRRect(
+      // 코너의 둥근 정도
+      borderRadius: BorderRadius.circular(20),
+      child: Image.network(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAgnPd-NLPUE8tG2TLLFq-gXTdI6vuv2hQqQ&usqp=CAU',
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
