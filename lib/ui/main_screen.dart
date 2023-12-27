@@ -13,25 +13,18 @@ class MainScreen extends StatelessWidget {
             children: [
               TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      width: 2,
-                      color: Color(0xFF4FFB6B2),
-                    ),
-                  ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
                       width: 2,
-                      color: Color(0xFF4FFB6B2),
+                      color: Color(0xFF4FB6B2),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
                       width: 2,
-                      color: Color(0xFF4FFB6B2),
+                      color: Color(0xFF4FB6B2),
                     ),
                   ),
                 ),
@@ -39,11 +32,11 @@ class MainScreen extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   itemCount: 10,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return const Text('111');
                   },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                 ),
               ),
             ],
