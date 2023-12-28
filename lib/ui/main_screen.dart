@@ -12,6 +12,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final repository = MockImageItemRepository();
+  final textController = TextEditingController();
 
   List<ImageItem> imageItems = [];
 
@@ -19,6 +20,12 @@ class _MainScreenState extends State<MainScreen> {
     imageItems = await repository.getImageItem(query);
 
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -44,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
                   hintText: 'search',
                   suffixIcon: IconButton(
                     onPressed: () {
-                      searchImage('apple');
+                      searchImage(textController.text);
                     },
                     icon: const Icon(
                       Icons.search,
