@@ -26,6 +26,14 @@ class MainScreen extends StatelessWidget {
                     borderSide:
                         const BorderSide(color: Colors.yellow, width: 5),
                   ),
+                  hintText: 'search',
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.red,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
