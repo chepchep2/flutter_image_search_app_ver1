@@ -15,11 +15,18 @@ class _MainScreenState extends State<MainScreen> {
   final textController = TextEditingController();
 
   List<ImageItem> imageItems = [];
+  bool isLoading = false;
 
   Future<void> searchImage(String query) async {
+    setState(() {
+      isLoading = true;
+    });
+
     imageItems = await repository.getImageItem(query);
 
-    setState(() {});
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -62,21 +69,24 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: imageItems.length,
-                  itemBuilder: (context, index) {
-                    final imageItem = imageItems[index];
-                    return ImageItemWidget(
-                      imageItem: imageItem,
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 32,
-                      mainAxisSpacing: 32,
-                      crossAxisCount: 2),
-                ),
-              ),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : Expanded(
+                      child: GridView.builder(
+                        itemCount: imageItems.length,
+                        itemBuilder: (context, index) {
+                          final imageItem = imageItems[index];
+                          return ImageItemWidget(
+                            imageItem: imageItem,
+                          );
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 32,
+                                mainAxisSpacing: 32,
+                                crossAxisCount: 2),
+                      ),
+                    ),
             ],
           ),
         ),
