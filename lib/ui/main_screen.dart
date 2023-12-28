@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
 class MainScreen extends StatelessWidget {
@@ -17,11 +18,13 @@ class MainScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.yellow, width: 5),
+                    borderSide:
+                        const BorderSide(color: Colors.yellow, width: 5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.yellow, width: 5),
+                    borderSide:
+                        const BorderSide(color: Colors.yellow, width: 5),
                   ),
                 ),
               ),
@@ -30,11 +33,18 @@ class MainScreen extends StatelessWidget {
                 child: GridView.builder(
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return const ImageItemWidget();
+                    final imageItem = ImageItem(
+                        imageUrl:
+                            'https://img.khan.co.kr/news/2023/01/02/news-p.v1.20230102.1f95577a65fc42a79ae7f990b39e7c21_P1.png',
+                        tags: 'apple');
+
+                    return ImageItemWidget(
+                      imageItem: imageItem,
+                    );
                   },
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 32,
-                    mainAxisSpacing: 32,
+                      crossAxisSpacing: 32,
+                      mainAxisSpacing: 32,
                       crossAxisCount: 2),
                 ),
               ),

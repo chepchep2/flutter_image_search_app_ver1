@@ -1,10 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 
 class ImageItemWidget extends StatelessWidget {
-  const ImageItemWidget({super.key});
+  final ImageItem imageItem;
+
+  const ImageItemWidget({
+    super.key,
+    required this.imageItem,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Image.network('https://img.khan.co.kr/news/2023/01/02/news-p.v1.20230102.1f95577a65fc42a79ae7f990b39e7c21_P1.png');
+    return Image.network(
+      imageItem.imageUrl,
+      fit: BoxFit.cover,
+    );
   }
 }
