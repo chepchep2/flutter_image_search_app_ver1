@@ -33,6 +33,8 @@ class MainScreen extends StatelessWidget {
                     return const ImageItemWidget();
                   },
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 32,
+                    mainAxisSpacing: 32,
                       crossAxisCount: 2),
                 ),
               ),
