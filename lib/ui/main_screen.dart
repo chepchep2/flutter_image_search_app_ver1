@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 import 'package:flutter_image_search_app_ver1/data/repository/image_repository.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
+import 'package:flutter_image_search_app_ver1/ui/widget/main_view_mdoel.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -11,15 +12,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final repository = PixabayRepository();
-  List<ImageItem> imageItems = [];
   final textController = TextEditingController();
-
-  Future<void> searchImage(String query) async {
-    imageItems = await repository.getImageItems(query);
-
-    setState(() {});
-  }
+  final viewModel = MainViewModel();
 
   @override
   void dispose() {
@@ -49,7 +43,9 @@ class _MainScreenState extends State<MainScreen> {
                   hintText: 'search',
                   suffixIcon: IconButton(
                     onPressed: () {
-                      searchImage(textController.text);
+                      setState(() {
+                        viewModel.searchImage(textController.text);
+                      });
                     },
                     icon: const Icon(Icons.search),
                   ),
@@ -57,11 +53,11 @@ class _MainScreenState extends State<MainScreen> {
               ),
               Expanded(
                 child: GridView.builder(
-                  itemCount: imageItems.length,
+                  itemCount: viewModel.imageItems.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
-                    final imageItem = imageItems[index];
+                    final imageItem = viewModel.imageItems[index];
 
                     return ImageItemWidget(
                       imageItem: imageItem,
