@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/ui/main_screen.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
