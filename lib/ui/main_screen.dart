@@ -11,8 +11,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final repository = MockRepository();
+  final repository = PixabayImageRepository();
   List<ImageItem> imageItems = [];
+  final searchTextController = TextEditingController();
   bool isLoading = false;
 
   Future<void> searchImage(String query) async {
@@ -28,6 +29,12 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -36,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             children: [
               TextField(
+                controller: searchTextController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -54,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
                   hintText: 'search',
                   suffixIcon: IconButton(
                     onPressed: () {
-                      searchImage('apple');
+                      searchImage(searchTextController.text);
                     },
                     icon: const Icon(Icons.search),
                   ),
