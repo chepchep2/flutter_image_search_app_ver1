@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -34,13 +35,17 @@ class MainScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
               Expanded(
                 child: GridView.builder(
                   itemCount: 10,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                  ),
                   itemBuilder: (context, index) {
-                    return const Text('111');
+                    return const ImageItemWidget();
                   },
                 ),
               ),
