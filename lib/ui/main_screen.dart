@@ -13,7 +13,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final searchTextController = TextEditingController();
-  final viewModel = MainViewModel();
+
+  // final viewModel = MainViewModel();
 
   @override
   void dispose() {
@@ -48,42 +49,40 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   hintText: 'search',
                   suffixIcon: IconButton(
-                    onPressed: () async {
-                      setState(() {
-                        viewModel.isLoading = true;
-                      });
-                      await viewModel.searchImage(searchTextController.text);
-                      setState(() {
-                        viewModel.isLoading = false;
-                      });
+                    onPressed: () {
+                      setState(() {});
                     },
                     icon: const Icon(Icons.search),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              viewModel.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Expanded(
-                      child: GridView.builder(
-                        itemCount: viewModel.imageItems.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
-                        ),
-                        itemBuilder: (context, index) {
-                          final imageItem = viewModel.imageItems[index];
+              FutureBuilder<List<ImageItem>>(
+                future: PixabayImageRepository()
+                    .getImageItems(searchTextController.text),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator();
+                  }
 
-                          return ImageItemWidget(
-                            imageItem: imageItem,
-                          );
-                        },
+                  final imageItems = snapshot.data!;
+                  return Expanded(
+                    child: GridView.builder(
+                      itemCount: imageItems.length,
+                      itemBuilder: (context, index) {
+                        final imageItem = imageItems[index];
+                        return ImageItemWidget(imageItem: imageItem);
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 32,
+                        mainAxisSpacing: 32,
                       ),
                     ),
+                  );
+                },
+              ),
             ],
           ),
         ),
