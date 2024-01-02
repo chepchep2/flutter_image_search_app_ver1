@@ -1,11 +1,11 @@
-class PixaybayDto {
-  PixaybayDto({
+class PixabayDto {
+  PixabayDto({
     this.total,
     this.totalHits,
     this.hits,
   });
 
-  PixaybayDto.fromJson(dynamic json) {
+  PixabayDto.fromJson(dynamic json) {
     total = json['total'];
     totalHits = json['totalHits'];
     if (json['hits'] != null) {
