@@ -3,6 +3,7 @@ import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 import 'package:flutter_image_search_app_ver1/data/repository/image_repository.dart';
 import 'package:flutter_image_search_app_ver1/ui/main_view_model.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,7 +14,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final textController = TextEditingController();
-  final viewModel = MainViewModel();
 
   @override
   void dispose() {
@@ -23,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<MainViewModel>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -36,14 +37,8 @@ class _MainScreenState extends State<MainScreen> {
                   hintStyle: const TextStyle(
                       color: Colors.lightBlue, fontWeight: FontWeight.bold),
                   suffixIcon: IconButton(
-                    onPressed: () async {
-                      setState(() {
-                        viewModel.isLoading = true;
-                      });
-                      await viewModel.searchImageItems(textController.text);
-                      setState(() {
-                        viewModel.isLoading = false;
-                      });
+                    onPressed: () {
+                      viewModel.searchImageItems(textController.text);
                     },
                     icon: const Icon(
                       Icons.search,
