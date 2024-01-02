@@ -11,7 +11,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final repository = MockRepository();
+  final repository = PixabayRepository();
+  final textController = TextEditingController();
 
   List<ImageItem> imageItems = [];
 
@@ -30,6 +31,12 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -38,13 +45,14 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   hintText: 'search',
                   hintStyle: const TextStyle(
                       color: Colors.lightBlue, fontWeight: FontWeight.bold),
                   suffixIcon: IconButton(
                     onPressed: () {
-                      searchImageItems('baseball');
+                      searchImageItems(textController.text);
                     },
                     icon: const Icon(
                       Icons.search,
