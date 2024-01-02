@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/image_repository.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final repository = MockRepository();
+
+  List<ImageItem> imageItems = [];
+
+  Future<void> searchImageItems(String query) async {
+    imageItems = await repository.getImageItems(query);
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +31,26 @@ class MainScreen extends StatelessWidget {
             children: [
               TextField(
                 decoration: InputDecoration(
+                  hintText: 'search',
+                  hintStyle: const TextStyle(
+                      color: Colors.lightBlue, fontWeight: FontWeight.bold),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      searchImageItems('baseball');
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 5),
+                    borderSide:
+                        const BorderSide(width: 5, color: Colors.lightBlue),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 5),
+                    borderSide:
+                        const BorderSide(width: 5, color: Colors.lightBlue),
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -28,15 +58,16 @@ class MainScreen extends StatelessWidget {
               const SizedBox(height: 12),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  itemCount: imageItems.length,
+                  gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                   ),
                   itemBuilder: (context, index) {
-                    final imageItem = ImageItem(imageUrl: 'https://pbs.twimg.com/media/GAALXGibsAEI8cD?format=jpg&name=large', tags: 'apple');
+                    final imageItem = imageItems[index];
 
-                    return  ImageItemWidget(imageItem: imageItem);
+                    return ImageItemWidget(imageItem: imageItem);
                   },
                 ),
               ),
