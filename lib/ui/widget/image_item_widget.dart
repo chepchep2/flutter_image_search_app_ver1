@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 
 class ImageItemWidget extends StatelessWidget {
-  const ImageItemWidget({super.key});
+  final ImageItem imageItem;
+
+  const ImageItemWidget({
+    super.key,
+    required this.imageItem,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoUDuhmPxStnLaxkZf4QUkyvCjBYoZsTZ2lwKrqfXLhQ&s',
+        imageItem.imageUrl,
         fit: BoxFit.cover,
       ),
     );
