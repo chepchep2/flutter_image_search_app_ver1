@@ -17,7 +17,10 @@ class ImageItemWidget extends StatelessWidget {
       //   'https://www.biztechcs.com/wp-content/uploads/2023/09/How-Flutter-is-All-Set-to-Redefine-App-Development-Trends-2023-Updated-jpg.webp',
       //   fit: BoxFit.cover,
       // ),
-      child: Image.network(imageItem.imageUrl),
+      child: Image.network(
+        imageItem.imageUrl,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
