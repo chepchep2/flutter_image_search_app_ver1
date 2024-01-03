@@ -11,13 +11,20 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final repository = MockRepository();
+  final repository = PixabayRepository();
+  final textController = TextEditingController();
 
   List<ImageItem> imageItems = [];
 
   Future<void> searchItems(String query) async {
     imageItems = await repository.getImageItems(query);
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   @override
@@ -29,6 +36,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -41,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
                   hintText: 'search',
                   suffixIcon: IconButton(
                     onPressed: () {
-                      searchItems('flutter');
+                      searchItems(textController.text);
                     },
                     icon: const Icon(Icons.search),
                   ),
