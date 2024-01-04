@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 import 'package:flutter_image_search_app_ver1/data/repository/mock_image_repository.dart';
+import 'package:flutter_image_search_app_ver1/ui/main_view_model.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,15 +14,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final textController = TextEditingController();
-  final repository = PixabayRepository();
 
-  List<ImageItem> imageItems = [];
-
-  Future<void> searchImage(String query) async {
-    imageItems = await repository.getImageItems(query);
-
-    setState(() {});
-  }
 
   @override
   void dispose() {
@@ -30,6 +24,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final veiwModel = context.watch<MainViewModel>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -53,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
                   hintStyle: const TextStyle(color: Colors.red),
                   suffixIcon: IconButton(
                     onPressed: () {
-                      searchImage(textController.text);
+                      veiwModel.searchImage(textController.text);
                     },
                     icon: const Icon(
                       Icons.search,
@@ -63,22 +59,25 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: imageItems.length,
-                  itemBuilder: (context, index) {
-                    final imageItem = imageItems[index];
-                    return ImageItemWidget(
-                      imageItem: imageItem,
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                ),
-              ),
+              veiwModel.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Expanded(
+                      child: GridView.builder(
+                        itemCount: veiwModel.imageItems.length,
+                        itemBuilder: (context, index) {
+                          final imageItem = veiwModel.imageItems[index];
+                          return ImageItemWidget(
+                            imageItem: imageItem,
+                          );
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
