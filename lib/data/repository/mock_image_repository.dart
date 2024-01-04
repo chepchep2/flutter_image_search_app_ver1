@@ -1,5 +1,7 @@
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 
+
+
 class MockImageRepository {
   Future<List<ImageItem>> getImageItems(String query) async {
     if (query == 'flutter') {
