@@ -12,7 +12,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final textController = TextEditingController();
-  final repository = MockImageRepository();
+  final repository = PixabayRepository();
 
   List<ImageItem> imageItems = [];
 
