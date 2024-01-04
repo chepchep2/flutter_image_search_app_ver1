@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/mock_image_repository.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final textController = TextEditingController();
+  final repository = MockImageRepository();
+
+  List<ImageItem> imageItems = [];
+
+  Future<void> searchImage(String query) async {
+    imageItems = await repository.getImageItems(query);
+
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +37,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -28,7 +52,9 @@ class MainScreen extends StatelessWidget {
                   hintText: '검색',
                   hintStyle: const TextStyle(color: Colors.red),
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      searchImage(textController.text);
+                    },
                     icon: const Icon(
                       Icons.search,
                       color: Colors.red,
@@ -39,13 +65,9 @@ class MainScreen extends StatelessWidget {
               const SizedBox(height: 12),
               Expanded(
                 child: GridView.builder(
-                  itemCount: 10,
+                  itemCount: imageItems.length,
                   itemBuilder: (context, index) {
-                    final imageItem = ImageItem(
-                      imageUrl:
-                          'https://img.taling.me/Content/Uploads/Cover/9a9f123ad24707b13d0735444e0604c88059476a.png',
-                      tags: 'flutter',
-                    );
+                    final imageItem = imageItems[index];
                     return ImageItemWidget(
                       imageItem: imageItem,
                     );
