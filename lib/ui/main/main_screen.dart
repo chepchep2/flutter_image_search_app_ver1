@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
-import 'package:flutter_image_search_app_ver1/data/repository/mock_repository.dart';
 import 'package:flutter_image_search_app_ver1/ui/main_view_model.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () {
-                      viewModel.repository.getImageItems(textController.text
+                      viewModel.searchImages(textController.text
                       );
                     },
                     icon: const Icon(
@@ -50,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              Expanded(
+              viewModel.isLoading ? const Center(child: CircularProgressIndicator()) : Expanded(
                 child: GridView.builder(
                   itemCount: viewModel.imageItems.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
