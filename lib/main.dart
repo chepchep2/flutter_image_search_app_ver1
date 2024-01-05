@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/di/di_setup.dart';
-import 'package:flutter_image_search_app_ver1/data/repository/pixabay_repository.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/pixabay_repository_imple.dart';
 import 'package:flutter_image_search_app_ver1/routes/routes.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_screen.dart';
 import 'package:flutter_image_search_app_ver1/ui/main_view_model.dart';
