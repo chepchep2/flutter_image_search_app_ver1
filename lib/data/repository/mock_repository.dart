@@ -1,6 +1,9 @@
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/image_repository.dart';
+import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
-class MockRepository {
+class MockRepository implements ImageRepository {
+  @override
   Future<List<ImageItem>> getImageItems(String query) async {
     if (query == 'soccer') {
       return [
