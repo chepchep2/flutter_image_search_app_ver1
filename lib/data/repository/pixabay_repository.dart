@@ -6,6 +6,7 @@ import 'package:flutter_image_search_app_ver1/data/repository/image_repository.d
 class PixabayRepository implements ImageRepository {
   final _api = PixabayApi();
 
+  @override
   Future<List<ImageItem>> getImageItems(String query) async {
     final dto = await _api.getImageResult(query);
 
