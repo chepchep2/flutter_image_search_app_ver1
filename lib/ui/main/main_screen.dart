@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/mock_repository.dart';
+import 'package:flutter_image_search_app_ver1/ui/main_view_model.dart';
+import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  @override
   Widget build(BuildContext context) {
+    final viewModel = MainViewModel();
+    final textController = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -12,6 +24,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -24,7 +37,10 @@ class MainScreen extends StatelessWidget {
                     fontSize: 20,
                   ),
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      viewModel.repository.getImageItems(textController.text
+                      );
+                    },
                     icon: const Icon(
                       Icons.search,
                       size: 32,
@@ -35,16 +51,17 @@ class MainScreen extends StatelessWidget {
               const SizedBox(height: 12),
               Expanded(
                 child: GridView.builder(
-                  itemCount: 10,
+                  itemCount: viewModel.imageItems.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                   ),
                   itemBuilder: (context, index) {
-                    return Image.network(
-                      'https://strapi.dhiwise.com/uploads/618fa90c201104b94458e1fb_647ecd43c5092e1c431f22fd_Flutter_App_Development_A_Step_by_Step_Tutorial_With_Dhi_Wise_E2_80_99s_Flutter_Builder_OG_Image_62b760b8fe.jpg',
-                      fit: BoxFit.cover,
+                    final imageItem = viewModel.imageItems[index];
+
+                    return ImageItemWidget(
+                      imageItem: imageItem,
                     );
                   },
                 ),
