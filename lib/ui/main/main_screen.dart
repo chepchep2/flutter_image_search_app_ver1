@@ -11,10 +11,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MainViewModel>();
-    final textController = TextEditingController();
+    final state = viewModel.state;
 
     return Scaffold(
       body: SafeArea(
@@ -48,16 +56,16 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              viewModel.isLoading ? const Center(child: CircularProgressIndicator()) : Expanded(
+              state.isLoading ? const Center(child: CircularProgressIndicator()) : Expanded(
                 child: GridView.builder(
-                  itemCount: viewModel.imageItems.length,
+                  itemCount: state.imageItem.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                   ),
                   itemBuilder: (context, index) {
-                    final imageItem = viewModel.imageItems[index];
+                    final imageItem = state.imageItem[index];
 
                     return ImageItemWidget(
                       imageItem: imageItem,
