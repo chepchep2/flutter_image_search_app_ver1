@@ -6,17 +6,19 @@ import 'package:flutter_image_search_app_ver1/data/repository/pixabay_repository
 class MainViewModel extends ChangeNotifier {
   final repository = PixabayRepository();
 
-  List<ImageItem> imageItems = [];
+  List<ImageItem> _imageItems = [];
 
-  bool isLoading = false;
+  bool _isLoading = false;
+  List<ImageItem> get imageItems => List.unmodifiable(_imageItems);
+  bool get isLoading => _isLoading;
 
   Future<void> searchImages(String query) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
 
-    imageItems = await repository.getImageItems(query);
+    _imageItems = await repository.getImageItems(query);
 
-    isLoading = false;
+    _isLoading = false;
     notifyListeners();
   }
 }
