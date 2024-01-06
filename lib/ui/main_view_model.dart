@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
-import 'package:flutter_image_search_app_ver1/data/repository/image_repository.dart';
-import 'package:flutter_image_search_app_ver1/ui/main_state.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/mock_repository.dart';
 
-class MainViewModel extends ChangeNotifier {
-  final ImageRepository _repository;
+class MainViewModel extends ChangeNotifier{
+  final repository = MockRepository();
 
-  MainState _state = const MainState();
+  List<ImageItem> imageItems = [];
 
-  MainState get state => _state;
-
-  MainViewModel({
-    required ImageRepository repository,
-  }) : _repository = repository;
+  bool isLoading = false;
 
   Future<void> searchImages(String query) async {
-    _state = state.copyWith(isLoading: true);
+    isLoading = true;
     notifyListeners();
 
-    final results = (await _repository.getImageItems(query)).toList();
+    imageItems = await repository.getImageResult(query);
 
-    _state = state.copyWith(
-      isLoading: false,
-      imageItem:
-          List.unmodifiable((await _repository.getImageItems(query)).toList()),
-    );
+    isLoading = false;
     notifyListeners();
   }
 }
