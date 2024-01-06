@@ -1,3 +1,4 @@
+import 'package:flutter_image_search_app_ver1/data/repository/pixabay_repository_impl.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_screen.dart';
 import 'package:flutter_image_search_app_ver1/ui/main_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +9,7 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => ChangeNotifierProvider(
-        create: (context) => MainViewModel(),
+        create: (context) => MainViewModel(repository: PixabayRepositoryImpl()),
         child: const MainScreen(),
       ),
     ),
