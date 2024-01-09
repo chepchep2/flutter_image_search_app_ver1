@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_image_search_app_ver1/routes.dart';
-import 'package:flutter_image_search_app_ver1/ui/main/main_screen.dart';
-import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
-import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(
@@ -16,18 +13,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
+    return MaterialApp(
+
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: ChangeNotifierProvider(
-      //   create: (_) => MainViewModel(),
-      //   child: const MainScreen(),
-      // ),
+      home: const MainScreen(),
     );
   }
 }
