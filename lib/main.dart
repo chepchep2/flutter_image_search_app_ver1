@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/data/di/disetup.dart';
 import 'package:flutter_image_search_app_ver1/routes.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_screen.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  diSetup();
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
