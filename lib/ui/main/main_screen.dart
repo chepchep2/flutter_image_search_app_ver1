@@ -24,33 +24,35 @@ class _MainScreenState extends State<MainScreen> {
     final viewModel = context.watch<MainViewModel>();
 
     return Scaffold(
-      body: Column(
-        children: [
-          TextField(
-            controller: textController,
-            decoration: InputDecoration(
-              hintText: 'search',
-              suffixIcon: IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  viewModel.searchImage(textController.text);
+      body: SafeArea(
+        child: Column(
+          children: [
+            TextField(
+              controller: textController,
+              decoration: InputDecoration(
+                hintText: 'search',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    viewModel.searchImage(textController.text);
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                itemCount: viewModel.imageItems.length,
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  final imageItems = viewModel.imageItems[index];
+        
+                  return ImageItemWidget(imageItem: imageItems);
                 },
               ),
             ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: viewModel.imageItems.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                final imageItems = viewModel.imageItems[index];
-
-                return ImageItemWidget(imageItem: imageItems);
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
