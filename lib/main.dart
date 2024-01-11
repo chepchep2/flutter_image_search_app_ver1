@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/gi/di_setup.dart';
 import 'package:flutter_image_search_app_ver1/routes.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_screen.dart';
 
 void main() {
+  diSetup();
   runApp(const MyApp());
 }
 

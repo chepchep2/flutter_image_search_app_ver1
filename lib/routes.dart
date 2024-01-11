@@ -1,3 +1,4 @@
+import 'package:flutter_image_search_app_ver1/gi/di_setup.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_screen.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +9,7 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => ChangeNotifierProvider(
-        create: (_) => MainViewModel(),
+        create: (_) => getIt<MainViewModel>(),
         child: const MainScreen(),
       ),
     ),
