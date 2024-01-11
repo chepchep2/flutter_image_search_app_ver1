@@ -1,0 +1,12 @@
+import 'package:flutter_image_search_app_ver1/data/repository/image_repository.dart';
+import 'package:flutter_image_search_app_ver1/data/repository/mock_repository.dart';
+import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
+import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.instance;
+
+void deSetup() {
+  getIt.registerSingleton<ImageRepository>(getIt<MockRepository>());
+
+  // getIt.registerFactory<MainViewModel>(() => )
+}
