@@ -8,8 +8,15 @@ class MainViewModel extends ChangeNotifier {
 
   List<ImageItem> imageItems = [];
 
+  bool isLoading = false;
+
   Future<void> searchImage(String query) async {
+    isLoading = true;
+    notifyListeners();
+
     imageItems = await repository.getImageItem(query);
+
+    isLoading = false;
     notifyListeners();
   }
 }
