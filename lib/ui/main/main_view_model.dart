@@ -5,17 +5,21 @@ import 'package:flutter_image_search_app_ver1/data/repository/mock_repository.da
 import 'package:flutter_image_search_app_ver1/data/repository/pixabay_repository.dart';
 
 class MainViewModel extends ChangeNotifier {
-  final ImageRepository repository = PixabayRepository();
+  final ImageRepository _repository;
 
   List<ImageItem> imageItems = [];
 
   bool isLoading = false;
 
+  MainViewModel({
+    required ImageRepository repository,
+  }) : _repository = repository;
+
   Future<void> searchImage(String query) async {
     isLoading = true;
     notifyListeners();
 
-    imageItems = await repository.getImageItem(query);
+    imageItems = await _repository.getImageItem(query);
 
     isLoading = false;
     notifyListeners();
