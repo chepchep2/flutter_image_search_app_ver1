@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +27,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
