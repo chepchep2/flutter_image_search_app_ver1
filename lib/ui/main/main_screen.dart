@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
 import 'package:flutter_image_search_app_ver1/ui/widget/image_item_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,6 +22,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<MainViewModel>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -37,24 +41,23 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   labelText: 'search',
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      viewModel.searchImage(textController.text);
+                    },
                     icon: const Icon(Icons.search),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              Expanded(
+              viewModel.isLoading ? const Center(child: CircularProgressIndicator()) : Expanded(
                 child: GridView.builder(
-                  itemCount: 10,
+                  itemCount: viewModel.imageItems.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20),
                   itemBuilder: (context, index) {
-                    final imageItem = ImageItem(
-                        imageUrl:
-                            'https://static.wbsc.org/uploads/federations/0/cms/photos/338564b4-122c-78a8-63c0-2bb8d34a88ce.jpg',
-                        tags: '');
+                    final imageItem = viewModel.imageItems[index];
 
                     return ImageItemWidget(imageItem: imageItem);
                   },
