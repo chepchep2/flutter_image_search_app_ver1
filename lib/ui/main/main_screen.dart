@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
 import 'package:flutter_image_search_app_ver1/ui/main/widget/image_item_widget.dart';
+import 'package:provider/provider.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<MainViewModel>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -14,6 +31,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -23,31 +41,32 @@ class MainScreen extends StatelessWidget {
                   ),
                   labelText: 'search',
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      viewModel.searchImage(textController.text);
+                    },
                     icon: const Icon(Icons.search),
                   ),
                 ),
               ),
               const SizedBox(height: 24),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: 10,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                  ),
-                  itemBuilder: (context, index) {
-                    final imageItem = ImageItem(
-                      imageUrl:
-                          'https://i.ytimg.com/vi/luBupR3imWI/maxresdefault.jpg',
-                      tags: '',
-                    );
+              viewModel.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Expanded(
+                      child: GridView.builder(
+                        itemCount: viewModel.imageItems.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                        ),
+                        itemBuilder: (context, index) {
+                          final imageItem = viewModel.imageItems[index];
 
-                    return ImageItemWidget(imageItem: imageItem);
-                  },
-                ),
-              ),
+                          return ImageItemWidget(imageItem: imageItem);
+                        },
+                      ),
+                    ),
             ],
           ),
         ),
