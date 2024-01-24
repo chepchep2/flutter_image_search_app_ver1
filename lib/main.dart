@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_image_search_app_ver1/di/di_setup.dart';
-import 'package:flutter_image_search_app_ver1/routes.dart';
 
 void main() {
-  diSetup();
   runApp(const MyApp());
 }
 
@@ -12,8 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
