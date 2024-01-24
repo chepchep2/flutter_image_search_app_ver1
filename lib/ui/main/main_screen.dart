@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
+import 'package:flutter_image_search_app_ver1/ui/main/widget/image_item_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -30,10 +32,19 @@ class MainScreen extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   itemCount: 10,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                  ),
                   itemBuilder: (context, index) {
-                    return Text('1111');
+                    final imageItem = ImageItem(
+                      imageUrl:
+                          'https://i.ytimg.com/vi/luBupR3imWI/maxresdefault.jpg',
+                      tags: '',
+                    );
+
+                    return ImageItemWidget(imageItem: imageItem);
                   },
                 ),
               ),
