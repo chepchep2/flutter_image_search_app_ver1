@@ -1,71 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_search_app_ver1/data/model/image_item.dart';
-import 'package:flutter_image_search_app_ver1/ui/main/main_view_model.dart';
-import 'package:flutter_image_search_app_ver1/ui/main/widget/image_item_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_image_search_app_ver1/ui/main/image_item_widget.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  final textController = TextEditingController();
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<MainViewModel>();
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               TextField(
-                controller: textController,
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   hintText: 'search',
                   suffixIcon: IconButton(
-                    onPressed: () {
-                      viewModel.searchImage(textController.text);
-                    },
+                    onPressed: () {},
                     icon: Icon(Icons.search),
                   ),
                 ),
               ),
-              SizedBox(height: 24),
-              viewModel.isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: GridView.builder(
-                        itemCount: viewModel.imageItems.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
-                        ),
-                        itemBuilder: (context, index) {
-                          final imageItem = viewModel.imageItems[index];
+              Expanded(
+                child: GridView.builder(
+                  itemCount: 10,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (context, index) {
+                    final imageItem = ImageItem(imageUrl: 'asd', tags: '');
 
-                          return ImageItemWidget(imageItem: imageItem);
-                        },
-                      ),
-                    ),
+                    return ImageItemWidget(imageItem: imageItem);
+                  },
+                ),
+              ),
             ],
           ),
         ),
